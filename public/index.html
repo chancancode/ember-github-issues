@@ -29,6 +29,7 @@
           {{gh-avatar url=avatar_url size=60}}
           {{login}}
         {{/link-to}}
+        {{outlet repository-topbar}}
       </h1>
     </div>
 
@@ -38,12 +39,37 @@
   <script type="text/x-handlebars" id="user/index">
     <ul class="repositories">
       {{#each controller}}
-        <li class="repository">
+        {{#link-to "repository" name tagName="li" class="repository"}}
           <h2>{{name}}</h2>
           <div class="issues">
             {{open_issues_count}} Issues
           </div>
-        </li>
+        {{/link-to}}
+      {{/each}}
+    </ul>
+  </script>
+
+  <script type="text/x-handlebars" id="repository/topbar">
+    <div class="seperator">/</div> {{link-to name 'repository' name}}
+  </script>
+
+  <script type="text/x-handlebars" id="repository/index">
+    <ul class="issues">
+      {{#each controller}}
+        {{#link-to "issue" number tagName="li" class="issue"}}
+          <h2>#{{number}}</h2>
+          <h3>{{title}}</h3>
+          <div class="meta">
+            <div class="user">
+              {{gh-avatar url=user.avatar_url size=24}}
+              {{user.login}}
+            </div>
+            <div class="seperator">|</div>
+            <div class="comments">
+              {{comments}} Comments
+            </div>
+          </div>
+        {{/link-to}}
       {{/each}}
     </ul>
   </script>

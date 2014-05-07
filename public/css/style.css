@@ -6,6 +6,10 @@ body {
   margin-top: 120px;
 }
 
+.seperator {
+  margin: 0px 10px !important;
+}
+
 .loading {
   position: absolute;
   top: 0px;
@@ -43,6 +47,15 @@ body {
 .topbar h1 * {
   float: left;
   height: 60px;
+}
+
+.topbar h1 a, .topbar h1 a:visited, .topbar h1 a:active {
+  color: black;
+  text-decoration: none;
+}
+
+.topbar h1 a:hover {
+  text-decoration: underline;
 }
 
 .topbar h1 img {
@@ -85,4 +98,47 @@ ul li:last-of-type {
   line-height: 40px;
   text-align: right;
   color: #666;
+}
+
+.issues .issue {
+  padding: 25px;
+  cursor: pointer;
+}
+
+.issues .issue h2, .issues .issue h3 {
+  font-size: 20px;
+  line-height: 26px;
+  margin: 0px;
+}
+
+.issues .issue h2 {
+  float: right;
+  color: #999;
+  font-weight: normal;
+}
+
+.issues .issue h3 {
+  margin-right: 100px;
+  margin-bottom: 10px;
+}
+
+.issues .issue .meta {
+  overflow: hidden;
+  color: #666;
+}
+
+.issues .issue .meta * {
+  float: left;
+  line-height: 24px;
+  height: 24px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.issues .issue .user {
+  overflow: hidden;
+}
+
+.issues .issue .user img {
+  margin-right: 5px;
 }
