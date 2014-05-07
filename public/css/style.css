@@ -70,9 +70,12 @@ ul {
   border-radius: 5px;
 }
 
+ul li {
+  border-bottom: 1px solid #DDD;
+}
+
 ul li:nth-child(even) {
   background: #F2F2F2;
-  border-bottom: 1px solid #DDD;
 }
 
 ul li:last-of-type {
