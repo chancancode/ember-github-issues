@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin-top: 120px;
+}
+
+.loading {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+
+  background: #fff;
+  font-size: 20px;
+
+  text-align: center;
+  margin-top: 250px;
+}
+
+.topbar {
+  position: fixed;
+  height: 100px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+
+  overflow: hidden;
+
+  background: #F2F2F2;
+  border-bottom: 1px solid #DDD;
+}
+
+.topbar h1 {
+  overflow: hidden;
+  padding: 20px;
+  margin: 0px 100px 0px 0px;
+  line-height: 60px;
+}
+
+.topbar h1 * {
+  float: left;
+  height: 60px;
+}
+
+.topbar h1 img {
+  margin-right: 20px;
+}
+
+ul {
+  list-style: none;
+  margin: 20px;
+  padding: 0px;
+  border: 1px solid #DDD;
+  border-radius: 5px;
+}
+
+ul li:nth-child(even) {
+  background: #F2F2F2;
+  border-bottom: 1px solid #DDD;
+}
+
+ul li:last-of-type {
+  border-bottom: none;
+}
+
+.repositories .repository {
+  padding: 15px 25px;
+  height: 70px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.repositories .repository h2 {
+  float: left;
+  margin: 0px;
+  line-height: 40px;
+  font-weight: normal;
+}
+
+.repositories .repository .issues {
+  float: right;
+  line-height: 40px;
+  text-align: right;
+  color: #666;
+}

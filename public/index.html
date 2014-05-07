@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GitHub Issues Browser</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <script type="text/x-handlebars" id="components/gh-avatar">
+    <img {{bind-attr src=src width=size height=size}} />
+  </script>
+
+  <script type="text/x-handlebars" id="loading">
+    <div class="loading">
+      Loading...
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="index">
+    <h1>Welcome!</h1>
+    {{input type="text" value=repo action="go"}} <button {{action "go"}}>Go</button>
+  </script>
+
+  <script type="text/x-handlebars" id="user">
+    <div class="topbar">
+      <h1>
+        {{#link-to 'user' login}}
+          {{gh-avatar url=avatar_url size=60}}
+          {{login}}
+        {{/link-to}}
+      </h1>
+    </div>
+
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" id="user/index">
+    <ul class="repositories">
+      {{#each controller}}
+        <li class="repository">
+          <h2>{{name}}</h2>
+          <div class="issues">
+            {{open_issues_count}} Issues
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  </script>
+
+  <script src="js/libs/jquery-1.10.2.js"></script>
+  <script src="js/libs/handlebars-1.1.2.js"></script>
+  <script src="js/libs/ember-1.5.1.js"></script>
+  <script src="js/app.js"></script>
+  <!-- to activate the test runner, add the "?test" query string parameter -->
+  <script src="tests/runner.js"></script>
+</body>
+</html>
