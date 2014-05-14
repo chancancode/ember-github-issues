@@ -22,7 +22,18 @@
   </script>
 
   <script type="text/x-handlebars" id="user/index">
-    A list of repositories here
+    <ul class="striped repositories">
+      {{#each controller}}
+        {{#link-to "repository" name tagName="li" class="repository"}}
+          <h2>{{name}}</h2>
+          <div class="issues">
+            {{open_issues_count}} Issues
+          </div>
+        {{/link-to}}
+      {{else}}
+        <li class="nothing">This user has no repositories.</li>
+      {{/each}}
+    </ul>
   </script>
 
   <script type="text/x-handlebars" id="repository/index">

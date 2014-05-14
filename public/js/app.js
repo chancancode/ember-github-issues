@@ -24,3 +24,15 @@ App.UserRoute = Ember.Route.extend({
     return $.getJSON(GHAPI + '/users/' + params.username);
   }
 });
+
+App.UserIndexRoute = Ember.Route.extend({
+  model: function(params){
+    var username = this.modelFor('user').login;
+    return $.getJSON(GHAPI + '/users/' + username + '/repos?per_page=100');
+  }
+});
+
+App.UserIndexController = Ember.ArrayController.extend({
+  sortProperties: ['open_issues_count'],
+  sortAscending: false
+});
