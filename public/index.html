@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>GitHub Issues Browser</title>
   <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/highlight.default.css">
+  <link rel="stylesheet" href="css/highlight.github.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -23,6 +23,13 @@
   <script type="text/x-handlebars" id="loading">
     <div class="loading">
       Loading...
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="error">
+    <div class="error">
+      <h3>Uh oh, something went wrong :(</h3>
+      Perhaps you made a typo?
     </div>
   </script>
 
@@ -45,6 +52,12 @@
     {{outlet}}
   </script>
 
+  <script type="text/x-handlebars" id="user/loading">
+    <div class="loading">
+      Fetching repositories...
+    </div>
+  </script>
+
   <script type="text/x-handlebars" id="user/index">
     <ul class="repositories">
       {{#each controller}}
@@ -56,6 +69,19 @@
         {{/link-to}}
       {{/each}}
     </ul>
+  </script>
+
+  <script type="text/x-handlebars" id="repository/loading">
+    <div class="loading">
+      Fetching issues...
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="repository/error">
+    <div class="error">
+      <h3>Uh oh, something went wrong :(</h3>
+      Issues are disabled on this repository.
+    </div>
   </script>
 
   <script type="text/x-handlebars" id="repository/topbar">
@@ -79,6 +105,8 @@
             <div class="time">{{relative-time created_at}}</div>
           </div>
         {{/link-to}}
+      {{else}}
+        <li class="no-issues">This repository does not have any issues.</li>
       {{/each}}
       {{#if hasMore}}
         <li class="load-more">

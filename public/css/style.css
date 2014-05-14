@@ -89,7 +89,7 @@ pre code:before, pre code:after {
   margin: 0px 10px !important;
 }
 
-.loading {
+.loading, .error {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -176,14 +176,18 @@ ul li:last-of-type {
   color: #666;
 }
 
-.issues .issue, .issues .load-more {
+.issues .issue, .issues .load-more, .issues .no-issues {
   padding: 25px;
   cursor: pointer;
 }
 
-.issues .load-more {
+.issues .load-more, .issues .no-issues {
   text-align: center;
   color: #999;
+}
+
+.issues .no-issues {
+  cursor: default;
 }
 
 .issues .issue h2, .issues .issue h3 {

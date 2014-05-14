@@ -53,7 +53,11 @@ App.GhMarkdownComponent = Ember.Component.extend({
     text = marked(text, {
       sanitize: true,
       highlight: function(code, lang){
-        return lang ? hljs.highlight(lang, code, true).value : code;
+        try{
+          return hljs.highlight(lang, code, true).value;
+        }catch(e){
+          return code;
+        }
       }
     });
 
@@ -157,6 +161,9 @@ App.RepositoryIndexRoute = Ember.Route.extend({
         self.set('nextLink', match && match[1]);
         self.set('isLoading', false);
         return data;
+      }, function(reason){
+        self.set('isLoading', false);
+        return reason;
       });
     }
   },
