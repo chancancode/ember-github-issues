@@ -9,6 +9,14 @@ $.ajaxPrefilter(function(options, _, jqxhr){
 
 // Ember stuff below
 
+Ember.Handlebars.registerBoundHelper('pluralize', function(str, count){
+  return (count === 1) ? str : (str + 's');
+});
+
+Ember.Handlebars.registerBoundHelper('relative-time', function(time){
+  return moment(time).fromNow();
+});
+
 App = Ember.Application.create();
 
 App.Router.map(function(){
@@ -56,4 +64,13 @@ App.RepositoryIndexRoute = Ember.Route.extend({
     var repo = this.modelFor('repository').full_name;
     return $.getJSON(GHAPI + '/repos/' + repo + '/issues');
   }
+});
+
+App.GhAvatarComponent = Ember.Component.extend({
+  src: null,
+  size: null,
+
+  scaledSrc: function(){
+    return this.get('src') + 's=' + this.get('size');
+  }.property('src', 'size')
 });

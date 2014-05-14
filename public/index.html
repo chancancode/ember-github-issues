@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <script type="text/x-handlebars" id="components/gh-avatar">
+    <img {{bind-attr src=scaledSrc width=size height=size}}>
+  </script>
+
   <script type="text/x-handlebars" id="index">
     <h1>Hello #EmberYVR</h1>
   </script>
@@ -14,7 +18,7 @@
   <script type="text/x-handlebars" id="user">
     <div class="topbar">
       <h1>
-        <img {{bind-attr src=avatar_url}}>
+        {{gh-avatar src=avatar_url size=60}}
         <span class="user-login">{{login}}</span>
         {{outlet repository-topbar}}
       </h1>
@@ -28,7 +32,7 @@
         {{#link-to "repository" name tagName="li" class="repository"}}
           <h2>{{name}}</h2>
           <div class="issues">
-            {{open_issues_count}} Issues
+            {{open_issues_count}} {{pluralize "Issue" open_issues_count}}
           </div>
         {{/link-to}}
       {{else}}
@@ -50,14 +54,16 @@
           <h3>{{title}}</h3>
           <div class="meta">
             <div class="user">
-              <img {{bind-attr src=user.avatar_url}}>
-              {{user.login}}
+              {{#link-to "user" user.login}}
+                {{gh-avatar src=user.avatar_url size=24}}
+                {{user.login}}
+              {{/link-to}}
             </div>
             <div class="comments">
-              {{comments}} Comments
+              {{comments}} {{pluralize "Comment" comments}}
             </div>
             <div class="time">
-              {{created_at}}
+              {{relative-time created_at}}
             </div>
           </div>
         {{/link-to}}
@@ -73,6 +79,7 @@
 
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/handlebars-1.1.2.js"></script>
+  <script src="js/libs/moment.min.js"></script>
   <script src="js/libs/ember-1.5.1.js"></script>
   <script src="js/app.js"></script>
 </body>
