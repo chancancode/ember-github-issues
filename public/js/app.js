@@ -67,6 +67,16 @@ App.RepositoryIndexRoute = Ember.Route.extend({
 });
 
 App.IssueRoute = Ember.Route.extend({
+  actions: {
+    goToIssue: function(number){
+      this.transitionTo('issue', number);
+    },
+
+    goToUser: function(username){
+      this.transitionTo('user', username);
+    }
+  },
+
   model: function(params){
     var repo = this.modelFor('repository').full_name;
     return $.getJSON(GHAPI + '/repos/' + repo + '/issues/' + params.issue);
@@ -104,5 +114,17 @@ App.GhMarkdownComponent = Ember.Component.extend({
     text = extractGithubReferences(text);
 
     return text.htmlSafe();
-  }.property('text')
+  }.property('text'),
+
+  click: function(e){
+    var $target = $(e.target);
+
+    if($target.hasClass('gh-issue-ref')){
+      e.preventDefault();
+      this.sendAction('issueRefClicked', $target.data('gh-issue'));
+    }else if($target.hasClass('gh-user-ref')){
+      e.preventDefault();
+      this.sendAction('userRefClicked', $target.data('gh-user'));
+    }
+  }
 });
