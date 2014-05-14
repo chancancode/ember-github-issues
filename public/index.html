@@ -51,7 +51,7 @@
         {{#link-to "repository" name tagName="li" class="repository"}}
           <h2>{{name}}</h2>
           <div class="issues">
-            {{open_issues_count}} Issues
+            {{open_issues_count}} {{pluralize "Issue" open_issues_count}}
           </div>
         {{/link-to}}
       {{/each}}
