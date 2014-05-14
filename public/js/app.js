@@ -12,22 +12,24 @@ App = Ember.Application.create();
 App.Router.map(function(){
   this.resource('user', {path: '/:user'}, function(){
     this.resource('repository', {path: '/:repository'}, function(){
-      this.resource('issue', {path: '/:issue'});
+      this.resource('issue', {path: 'issues/:issue'});
     });
   });
 });
 
-App.IndexController = Ember.ObjectController.extend({
-  repo: null,
+App.IndexController = Ember.Controller.extend({
+  where: null,
 
   actions: {
     go: function(){
-      var path = this.get('repo').split('/');
+      var path = this.get('where').split(/\/|#/);
 
       if(path.length === 1){
         this.transitionToRoute('user', path[0]);
-      }else if(path.length > 1){
+      }else if(path.length === 2){
         this.transitionToRoute('repository', path[0], path[1]);
+      }else{
+        this.transitionToRoute('issue', path[0], path[1], path[2]);
       }
     }
   }
@@ -41,6 +43,40 @@ App.GhAvatarComponent = Ember.Component.extend({
     return this.get('url') + 's=' + this.get('size');
   }.property('url', 'size')
 });
+
+App.GhMarkdownComponent = Ember.Component.extend({
+  text: null,
+
+  processedText: function(){
+    var text = this.get('text');
+
+    text = marked(text, {
+      sanitize: true,
+      highlight: function(code, lang){
+        return lang ? hljs.highlight(lang, code, true).value : code;
+      }
+    });
+
+    text = emojify.replace(text);
+
+    text = extractGithubReferences(text);
+
+    return text.htmlSafe();
+  }.property('text'),
+
+  click: function(e){
+    var $target = $(e.target);
+
+    if($target.hasClass('gh-issue-ref')){
+      e.preventDefault();
+      this.sendAction('issueRefClicked', $target.data('gh-issue'));
+    }else if($target.hasClass('gh-user-ref')){
+      e.preventDefault();
+      this.sendAction('userRefClicked', $target.data('gh-user'));
+    }
+  }
+});
+
 
 App.UserRoute = Ember.Route.extend({
   model: function(params){
@@ -80,4 +116,25 @@ App.RepositoryIndexRoute = Ember.Route.extend({
     var repo = this.modelFor('repository').full_name;
     return $.getJSON(GHAPI + 'repos/' + repo + '/issues');
   }
+});
+
+App.IssueRoute = Ember.Route.extend({
+  actions: {
+    goToIssue: function(issue){
+      this.transitionTo('issue', issue);
+    },
+
+    goToUser: function(user){
+      this.transitionTo('user', user);
+    }
+  },
+
+  model: function(params){
+    var repo = this.modelFor('repository').full_name;
+    return $.getJSON(GHAPI + 'repos/' + repo + '/issues/' + params.issue);
+  }
+});
+
+Ember.Handlebars.registerBoundHelper('pluralize', function(str, number, opts) {
+  return (number === 1) ? str : (str + 's');
 });
