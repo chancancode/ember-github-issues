@@ -80,6 +80,13 @@
           </div>
         {{/link-to}}
       {{/each}}
+      {{#if hasMore}}
+        <li class="load-more">
+          {{#visibility-checker action="loadMore"}}
+            Load more...
+          {{/visibility-checker}}
+        </li>
+      {{/if}}
     </ul>
   </script>
 

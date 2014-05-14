@@ -77,6 +77,34 @@ App.GhMarkdownComponent = Ember.Component.extend({
   }
 });
 
+App.VisibilityCheckerComponent = Ember.Component.extend({
+  margin: 0,
+
+  didInsertElement: function(){
+    var self = this;
+
+    $(window).on('scroll', function(){
+      Ember.run.throttle(self, self.windowDidScroll, 250);
+    });
+
+    this.windowDidScroll();
+  },
+
+  willDestroyElement: function(){
+    $(window).off('scroll');
+  },
+
+  click: function(){
+    this.sendAction();
+  },
+
+  windowDidScroll: function(){
+    if(this.get('element').getBoundingClientRect().top < window.innerHeight){
+      this.sendAction();
+    }
+  }
+});
+
 App.UserRoute = Ember.Route.extend({
   model: function(params){
     return $.getJSON(GHAPI + 'users/' + params.user);
@@ -111,10 +139,59 @@ App.RepositoryRoute = Ember.Route.extend({
 });
 
 App.RepositoryIndexRoute = Ember.Route.extend({
+  isLoading: false,
+  nextLink: null,
+
+  _load: function(url){
+    var self = this;
+    url = url || this.get('nextLink');
+
+    if(this.get('isLoading') || !url){
+      return Ember.RSVP.resolve([]);
+    }else{
+      this.set('isLoading', true);
+
+      return $.getJSON(url).then(function(data, _, xhr){
+        var links = xhr.getResponseHeader('link');
+        var match = links && links.match(/<(.+)>; rel="next"/i);
+        self.set('nextLink', match && match[1]);
+        self.set('isLoading', false);
+        return data;
+      });
+    }
+  },
+
+  actions: {
+    loadMore: function(){
+      var self = this;
+
+      this._load().then(function(data){
+        self.get('controller.model').pushObjects(data);
+        self.set('controller.hasMore', !! self.get('nextLink'));
+      });
+    }
+  },
+
   model: function(params){
     var repo = this.modelFor('repository').full_name;
-    return $.getJSON(GHAPI + 'repos/' + repo + '/issues');
+    return this._load(GHAPI + 'repos/' + repo + '/issues');
+  },
+
+  setupController: function(controller, model){
+    controller.set('model', model);
+    controller.set('isLoading', false);
+    controller.set('hasMore', !! this.get('nextLink'));
+  },
+
+  _parseLink: function(link){
+    var m = link.match(/<(.+)>; rel="next"/i);
+    this.set('nextLink', m && m[1]);
   }
+});
+
+App.RepositoryIndexController = Ember.ArrayController.extend({
+  isLoading: false,
+  hasMore: true
 });
 
 App.IssueRoute = Ember.Route.extend({

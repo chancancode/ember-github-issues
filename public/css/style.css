@@ -147,7 +147,7 @@ ul li {
   border-bottom: 1px solid #DDD;
 }
 
-ul li:nth-child(even) {
+ul li:nth-of-type(even) {
   background: #F2F2F2;
 }
 
@@ -176,9 +176,14 @@ ul li:last-of-type {
   color: #666;
 }
 
-.issues .issue {
+.issues .issue, .issues .load-more {
   padding: 25px;
   cursor: pointer;
+}
+
+.issues .load-more {
+  text-align: center;
+  color: #999;
 }
 
 .issues .issue h2, .issues .issue h3 {
