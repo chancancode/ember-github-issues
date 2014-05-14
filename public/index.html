@@ -20,6 +20,38 @@
     {{/if}}
   </script>
 
+  <script type="text/x-handlebars" id="loading">
+    <div class="loading">
+      Loading...
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="user/loading">
+    <div class="loading">
+      Fetching repositories...
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="repository/loading">
+    <div class="loading">
+      Fetching issues...
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="error">
+    <div class="error">
+      <h3>Uh oh, something went wrong :(</h3>
+      Perhaps you made a typo?
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="repository/error">
+    <div class="error">
+      <h3>Uh oh, something went wrong :(</h3>
+      The owner might have disabled issues on this repository.
+    </div>
+  </script>
+
   <script type="text/x-handlebars" id="index">
     <h1>Hello #EmberYVR</h1>
   </script>
