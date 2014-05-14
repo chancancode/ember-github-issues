@@ -203,6 +203,17 @@ ul li:last-of-type {
   color: #666;
 }
 
+.issues .issue .meta > *:after {
+  content: "|";
+  font-weight: normal;
+  color: #CCC;
+  padding: 0px 7px;
+}
+
+.issues .issue .meta >*:last-child:after {
+  content: normal;
+}
+
 .issues .issue .meta * {
   float: left;
   line-height: 24px;
@@ -241,11 +252,11 @@ ul li:last-of-type {
   color: #777;
   padding: 15px;
   overflow: hidden;
+  line-height: 24px;
 }
 
 .message .meta * {
   float: left;
-  line-height: 24px;
 }
 
 .message .meta .user, .message .meta .user a {
@@ -255,6 +266,15 @@ ul li:last-of-type {
 
 .message .meta .user img {
   margin-right: 10px;
+}
+
+.message .meta .time {
+  margin-left: 5px;
+}
+
+.message .meta .time * {
+  float: none;
+  display: inline;
 }
 
 .message .body {

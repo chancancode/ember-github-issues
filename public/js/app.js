@@ -77,6 +77,13 @@ App.GhMarkdownComponent = Ember.Component.extend({
   }
 });
 
+App.RelativeTimeComponent = Ember.Component.extend({
+  time: null,
+
+  relativeTime: function(){
+    return moment(this.get('time')).fromNow();
+  }.property('time')
+});
 
 App.UserRoute = Ember.Route.extend({
   model: function(params){
@@ -144,6 +151,10 @@ App.IssueRoute = Ember.Route.extend({
       return issue;
     });
   }
+});
+
+Ember.Handlebars.registerBoundHelper('relative-time', function(time) {
+  return moment(time).fromNow();
 });
 
 Ember.Handlebars.registerBoundHelper('pluralize', function(str, number, opts) {
