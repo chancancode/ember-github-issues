@@ -50,3 +50,10 @@ App.RepositoryRoute = Ember.Route.extend({
     });
   }
 });
+
+App.RepositoryIndexRoute = Ember.Route.extend({
+  model: function(params){
+    var repo = this.modelFor('repository').full_name;
+    return $.getJSON(GHAPI + '/repos/' + repo + '/issues');
+  }
+});

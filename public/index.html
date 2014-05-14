@@ -43,7 +43,28 @@
   </script>
 
   <script type="text/x-handlebars" id="repository/index">
-    A list of issues here
+    <ul class="striped issues">
+      {{#each controller}}
+        {{#link-to "issue" number tagName="li" class="issue"}}
+          <h2>#{{number}}</h2>
+          <h3>{{title}}</h3>
+          <div class="meta">
+            <div class="user">
+              <img {{bind-attr src=user.avatar_url}}>
+              {{user.login}}
+            </div>
+            <div class="comments">
+              {{comments}} Comments
+            </div>
+            <div class="time">
+              {{created_at}}
+            </div>
+          </div>
+        {{/link-to}}
+      {{else}}
+        <li class="nothing">This repository has no issues.</li>
+      {{/each}}
+    </ul>
   </script>
 
   <script type="text/x-handlebars" id="issue">
