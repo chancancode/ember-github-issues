@@ -36,3 +36,17 @@ App.UserIndexController = Ember.ArrayController.extend({
   sortProperties: ['open_issues_count'],
   sortAscending: false
 });
+
+App.RepositoryRoute = Ember.Route.extend({
+  model: function(params){
+    var username = this.modelFor('user').login;
+    return $.getJSON(GHAPI + '/repos/' + username + '/' + params.repository);
+  },
+  renderTemplate: function(){
+    this._super();
+    this.render('repository/topbar', {
+      into: 'user',
+      outlet: 'repository-topbar'
+    });
+  }
+});

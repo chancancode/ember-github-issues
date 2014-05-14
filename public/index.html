@@ -16,6 +16,7 @@
       <h1>
         <img {{bind-attr src=avatar_url}}>
         <span class="user-login">{{login}}</span>
+        {{outlet repository-topbar}}
       </h1>
     </div>
     {{outlet}}
@@ -34,6 +35,11 @@
         <li class="nothing">This user has no repositories.</li>
       {{/each}}
     </ul>
+  </script>
+
+  <script type="text/x-handlebars" id="repository/topbar">
+    <div class="seperator">/</div>
+    <span class="repo-name">{{name}}</span>
   </script>
 
   <script type="text/x-handlebars" id="repository/index">
