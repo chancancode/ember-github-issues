@@ -11,6 +11,16 @@
     <h1>Hello #EmberYVR</h1>
   </script>
 
+  <script type="text/x-handlebars" id="user">
+    <div class="topbar">
+      <h1>
+        <img {{bind-attr src=avatar_url}}>
+        <span class="user-login">{{login}}</span>
+      </h1>
+    </div>
+    {{outlet}}
+  </script>
+
   <script type="text/x-handlebars" id="user/index">
     A list of repositories here
   </script>
