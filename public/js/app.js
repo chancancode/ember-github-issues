@@ -77,14 +77,6 @@ App.GhMarkdownComponent = Ember.Component.extend({
   }
 });
 
-App.RelativeTimeComponent = Ember.Component.extend({
-  time: null,
-
-  relativeTime: function(){
-    return moment(this.get('time')).fromNow();
-  }.property('time')
-});
-
 App.UserRoute = Ember.Route.extend({
   model: function(params){
     return $.getJSON(GHAPI + 'users/' + params.user);
