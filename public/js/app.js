@@ -181,11 +181,6 @@ App.RepositoryIndexRoute = Ember.Route.extend({
     controller.set('model', model);
     controller.set('isLoading', false);
     controller.set('hasMore', !! this.get('nextLink'));
-  },
-
-  _parseLink: function(link){
-    var m = link.match(/<(.+)>; rel="next"/i);
-    this.set('nextLink', m && m[1]);
   }
 });
 
