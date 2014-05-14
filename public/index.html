@@ -89,20 +89,27 @@
     <div class="issue">
       <h2>{{title}} <span class="number">#{{number}}</span></h2>
 
-      <div class="message">
-        <div class="meta">
-          <div class="user">
-            {{#link-to "user" user.login}}
-              {{gh-avatar url=user.avatar_url size=24}}
-              {{user.login}}
-            {{/link-to}}
-          </div>
+      {{partial "issue/message"}}
+
+      {{#each comments}}
+        {{partial "issue/message"}}
+      {{/each}}
+  </script>
+
+  <script type="text/x-handlebars" id="issue/_message">
+    <div class="message">
+      <div class="meta">
+        <div class="user">
+          {{#link-to "user" user.login}}
+            {{gh-avatar url=user.avatar_url size=24}}
+            {{user.login}}
+          {{/link-to}}
         </div>
-        <div class="body">
-          {{#gh-markdown text=body issueRefClicked="goToIssue" userRefClicked="goToUser"}}
-            <span class="fallback">No description provided.</span>
-          {{/gh-markdown}}
-        </div>
+      </div>
+      <div class="body">
+        {{#gh-markdown text=body issueRefClicked="goToIssue" userRefClicked="goToUser"}}
+          <span class="fallback">No description provided.</span>
+        {{/gh-markdown}}
       </div>
     </div>
   </script>

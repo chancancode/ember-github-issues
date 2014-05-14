@@ -79,9 +79,10 @@ pre code:before, pre code:after {
 }
 
 .emoji {
-    width: 1.5em;
-    height: 1.5em;
-    display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+  margin-bottom: 3px;
 }
 
 .seperator {
@@ -232,6 +233,7 @@ ul li:last-of-type {
   overflow: hidden;
   border: 1px solid #DDD;
   border-radius: 4px;
+  margin-bottom: 25px;
 }
 
 .message .meta {

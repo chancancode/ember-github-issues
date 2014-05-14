@@ -131,7 +131,18 @@ App.IssueRoute = Ember.Route.extend({
 
   model: function(params){
     var repo = this.modelFor('repository').full_name;
-    return $.getJSON(GHAPI + 'repos/' + repo + '/issues/' + params.issue);
+    var issueUrl = GHAPI + 'repos/' + repo + '/issues/' + params.issue;
+
+    var issuePromise    = $.getJSON(issueUrl);
+    var commentsPromise = $.getJSON(issueUrl + '/comments');
+
+    return Ember.RSVP.all([issuePromise, commentsPromise]).then(function(results){
+      var issue = results[0], comments = results[1];
+
+      issue.comments = comments;
+
+      return issue;
+    });
   }
 });
 
