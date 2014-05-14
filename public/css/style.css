@@ -1,0 +1,358 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 120px 20px 20px 20px;
+  color: #333;
+}
+
+a, a:visited, a:active, .gh-ref {
+  color: #4183C4;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover, .gh-ref:hover {
+  text-decoration: underline;
+}
+
+blockquote {
+  border-left: 4px solid #DDD;
+  margin: 0;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote > *:first-child {
+  margin-top: 0px;
+}
+
+blockquote > *:last-child {
+  margin-top: 0px;
+}
+
+code, pre {
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code {
+  margin: 0;
+  border: 1px solid #DDD;
+  background-color: #F8F8F8;
+  border-radius: 3px;
+  font-size: 12px;
+  padding: 0;
+}
+
+code:before, code:after {
+  content: "\00a0";
+  letter-spacing: -0.2em;
+}
+
+pre {
+  background-color: #F8F8F8;
+  border: 1px solid #DDD;
+  font-size: 18px;
+  line-height: 20px;
+  overflow: auto;
+  margin: 15px 0;
+  padding: 25px;
+  border-radius: 3px;
+  word-wrap: normal;
+}
+
+pre code {
+  margin: 0;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  word-wrap: normal;
+  max-width: initial;
+  display: inline;
+  overflow: initial;
+  line-height: inherit;
+}
+
+pre code:before, pre code:after {
+  content: normal;
+}
+
+.emoji {
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+  margin-bottom: 3px;
+}
+
+.seperator {
+  margin: 0px 10px !important;
+}
+
+.loading, .error {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+
+  background: #fff;
+  font-size: 20px;
+
+  text-align: center;
+  margin-top: 250px;
+}
+
+.topbar {
+  position: fixed;
+  height: 100px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+
+  overflow: hidden;
+
+  background: #F2F2F2;
+  border-bottom: 1px solid #DDD;
+
+  cursor: pointer;
+}
+
+.topbar h1 {
+  overflow: hidden;
+  padding: 20px;
+  margin: 0px 100px 0px 0px;
+  line-height: 60px;
+}
+
+.topbar h1 * {
+  float: left;
+  height: 60px;
+}
+
+.topbar h1 a {
+  color: #333;
+}
+
+.topbar h1 img {
+  margin-right: 20px;
+}
+
+.jump-bar, .jump-bar-hint {
+  z-index: 1000;
+  transition: top 0.15s ease;
+}
+
+.jump-bar.show {
+  top: 0;
+}
+
+.jump-bar.hide {
+  top: -100px;
+}
+
+.jump-bar input, .jump-bar input:active, .jump-bar input:focus {
+  outline: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 15px;
+
+  background: transparent;
+  box-shadow: none;
+  border: none;
+
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.jump-bar-hint {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+
+  font-size: 20px;
+  text-align: center;
+}
+
+.jump-bar-hint ul {
+  text-align: left;
+  display: inline-block;
+}
+
+ul.striped {
+  list-style: none;
+  padding: 0px;
+  border: 1px solid #DDD;
+  border-radius: 5px;
+}
+
+ul.striped li {
+  border-bottom: 1px solid #DDD;
+}
+
+ul.striped li:nth-of-type(even) {
+  background: #F2F2F2;
+}
+
+ul.striped li:last-of-type {
+  border-bottom: none;
+}
+
+.repositories .repository {
+  padding: 15px 25px;
+  height: 70px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.repositories .repository h2 {
+  float: left;
+  margin: 0px;
+  line-height: 40px;
+  font-weight: normal;
+}
+
+.repositories .repository .issues {
+  float: right;
+  line-height: 40px;
+  text-align: right;
+  color: #666;
+}
+
+.issues .issue, .issues .load-more, .nothing {
+  padding: 25px;
+  cursor: pointer;
+}
+
+.issues .load-more, .nothing {
+  text-align: center;
+  color: #999;
+}
+
+.nothing {
+  cursor: default;
+}
+
+.issues .issue h2, .issues .issue h3 {
+  font-size: 20px;
+  line-height: 26px;
+  margin: 0px;
+}
+
+.issues .issue h2 {
+  float: right;
+  color: #999;
+  font-weight: normal;
+}
+
+.issues .issue h3 {
+  margin-right: 100px;
+  margin-bottom: 10px
+}
+
+.issues .issue .meta {
+  overflow: hidden;
+  color: #666;
+}
+
+.issues .issue .meta > *:after {
+  content: "|";
+  font-weight: normal;
+  color: #CCC;
+  padding: 0px 7px;
+}
+
+.issues .issue .meta >*:last-child:after {
+  content: normal;
+}
+
+.issues .issue .meta * {
+  float: left;
+  line-height: 24px;
+  height: 24px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.issues .issue .user {
+  overflow: hidden;
+  font-weight: bold;
+}
+
+.issues .issue .user a {
+  color: #666;
+}
+
+.issues .issue .user img {
+  margin-right: 10px;
+}
+
+.issue h2 .number {
+  font-weight: normal;
+  color: #999;
+}
+
+.message {
+  overflow: hidden;
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  margin-bottom: 25px;
+}
+
+.message .meta {
+  background: #F7F7F7;
+  color: #777;
+  padding: 15px;
+  overflow: hidden;
+  line-height: 24px;
+}
+
+.message .meta * {
+  float: left;
+}
+
+.message .meta .user, .message .meta .user a {
+  font-weight: bold;
+  color: #333;
+}
+
+.message .meta .user img {
+  margin-right: 10px;
+}
+
+.message .meta .time {
+  margin-left: 5px;
+}
+
+.message .meta .time * {
+  float: none;
+  display: inline;
+}
+
+.message .body {
+  padding: 15px;
+  line-height: 1.7;
+}
+
+.message .body > div > *:nth-child(3) {
+  margin-top: 0 !important;
+}
+
+.message .body > div > *:nth-last-child(3) {
+  margin-bottom: 0 !important;
+}
+
+.message .body p {
+  margin: 15px 0;
+}
+
+.message .body .fallback {
+  color: #999;
+  font-style: italic;
+}
+
+.gh-user-ref {
+  color: #333;
+  font-weight: bold;
+}
