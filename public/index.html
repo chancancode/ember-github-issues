@@ -4,11 +4,20 @@
   <meta charset="utf-8">
   <title>GitHub Issues Browser</title>
   <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/highlight.github.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <script type="text/x-handlebars" id="components/gh-avatar">
     <img {{bind-attr src=scaledSrc width=size height=size}}>
+  </script>
+
+  <script type="text/x-handlebars" id="components/gh-markdown">
+    {{#if text}}
+      {{processedText}}
+    {{else}}
+      {{yield}}
+    {{/if}}
   </script>
 
   <script type="text/x-handlebars" id="index">
@@ -74,12 +83,37 @@
   </script>
 
   <script type="text/x-handlebars" id="issue">
-    A detailed view for this issue
+    <div class="issue">
+      <h2>{{title}} <span class="number">#{{number}}</span></h2>
+
+      <div class="message">
+        <div class="meta">
+          <div class="user">
+            {{#link-to "user" user.login}}
+              {{gh-avatar src=user.avatar_url size=24}}
+              {{user.login}}
+            {{/link-to}}
+          </div>
+          <div class="time">
+            commented {{relative-time created_at}}
+          </div>
+        </div>
+        <div class="body">
+          {{#gh-markdown text=body}}
+            <span class="fallback">No description provided.</span>
+          {{/gh-markdown}}
+        </div>
+      </div>
+    </div>
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/handlebars-1.1.2.js"></script>
   <script src="js/libs/moment.min.js"></script>
+  <script src="js/libs/emojify.js"></script>
+  <script src="js/libs/extract_github_references.js"></script>
+  <script src="js/libs/highlight.pack.js"></script>
+  <script src="js/libs/marked.js"></script>
   <script src="js/libs/ember-1.5.1.js"></script>
   <script src="js/app.js"></script>
 </body>

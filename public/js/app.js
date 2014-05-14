@@ -66,6 +66,13 @@ App.RepositoryIndexRoute = Ember.Route.extend({
   }
 });
 
+App.IssueRoute = Ember.Route.extend({
+  model: function(params){
+    var repo = this.modelFor('repository').full_name;
+    return $.getJSON(GHAPI + '/repos/' + repo + '/issues/' + params.issue);
+  }
+});
+
 App.GhAvatarComponent = Ember.Component.extend({
   src: null,
   size: null,
@@ -73,4 +80,29 @@ App.GhAvatarComponent = Ember.Component.extend({
   scaledSrc: function(){
     return this.get('src') + 's=' + this.get('size');
   }.property('src', 'size')
+});
+
+App.GhMarkdownComponent = Ember.Component.extend({
+  text: null,
+
+  processedText: function(){
+    var text = this.get('text');
+
+    text = marked(text, {
+      sanitize: true,
+      highlight: function(code, lang){
+        try{
+          return hljs.highlight(lang, code, true).value;
+        }catch(e){
+          return code;
+        }
+      }
+    });
+
+    text = emojify.replace(text);
+
+    text = extractGithubReferences(text);
+
+    return text.htmlSafe();
+  }.property('text')
 });
