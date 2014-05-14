@@ -114,6 +114,8 @@ pre code:before, pre code:after {
 
   background: #F2F2F2;
   border-bottom: 1px solid #DDD;
+
+  cursor: pointer;
 }
 
 .topbar h1 {
@@ -136,22 +138,64 @@ pre code:before, pre code:after {
   margin-right: 20px;
 }
 
-ul {
+.jump-bar, .jump-bar-hint {
+  z-index: 1000;
+  transition: top 0.15s ease;
+}
+
+.jump-bar.show {
+  top: 0;
+}
+
+.jump-bar.hide {
+  top: -100px;
+}
+
+.jump-bar input, .jump-bar input:active, .jump-bar input:focus {
+  outline: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 15px;
+
+  background: transparent;
+  box-shadow: none;
+  border: none;
+
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.jump-bar-hint {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+
+  font-size: 20px;
+  text-align: center;
+}
+
+.jump-bar-hint ul {
+  text-align: left;
+  display: inline-block;
+}
+
+ul.striped {
   list-style: none;
   padding: 0px;
   border: 1px solid #DDD;
   border-radius: 5px;
 }
 
-ul li {
+ul.striped li {
   border-bottom: 1px solid #DDD;
 }
 
-ul li:nth-of-type(even) {
+ul.striped li:nth-of-type(even) {
   background: #F2F2F2;
 }
 
-ul li:last-of-type {
+ul.striped li:last-of-type {
   border-bottom: none;
 }
 
@@ -176,17 +220,17 @@ ul li:last-of-type {
   color: #666;
 }
 
-.issues .issue, .issues .load-more, .issues .no-issues {
+.issues .issue, .issues .load-more, .nothing {
   padding: 25px;
   cursor: pointer;
 }
 
-.issues .load-more, .issues .no-issues {
+.issues .load-more, .nothing {
   text-align: center;
   color: #999;
 }
 
-.issues .no-issues {
+.nothing {
   cursor: default;
 }
 

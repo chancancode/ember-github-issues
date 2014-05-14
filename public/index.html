@@ -20,6 +20,32 @@
     {{/if}}
   </script>
 
+  <script type="text/x-handlebars" id="components/jump-bar">
+    <div {{bind-attr class=":topbar :jump-bar isShowing:show:hide"}}>
+      {{input value=where placeholder="Go to..." action="didPressEnter" escape-press="didCancel"}}
+    </div>
+  </script>
+
+  <script type="text/x-handlebars">
+    {{jump-bar action="go" dismiss="dismissJumpBar" isShowing=isShowingJumpBar}}
+
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" id="index">
+    <div class="jump-bar-hint">
+      <h3>Welcome to the GitHub Issue Browser!</h3>
+      <p>
+        Enter a GitHub username, repository or issue number to get started. Try these:
+        <ul>
+          <li>Type <a {{action "go" "emberjs"}}><strong>emberjs</strong></a> to browser repositories under the "emberjs" organization.</li>
+          <li>Type <a {{action "go" "emberjs/website"}}><strong>emberjs/website</strong></a> to browser the issues in the "emberjs/website" repository.</li>
+          <li>Type <a {{action "go" "emberjs/website#1"}}><strong>emberjs/website#1</strong></a> to view the first issue on the "emberjs/website" repository.</li>
+        </ul>
+      </p>
+    </div>
+  </script>
+
   <script type="text/x-handlebars" id="loading">
     <div class="loading">
       Loading...
@@ -33,18 +59,11 @@
     </div>
   </script>
 
-  <script type="text/x-handlebars" id="index">
-    <h1>Welcome!</h1>
-    {{input type="text" value=where action="go"}} <button {{action "go"}}>Go</button>
-  </script>
-
   <script type="text/x-handlebars" id="user">
-    <div class="topbar">
+    <div class="topbar" {{action "showJumpBar"}}>
       <h1>
-        {{#link-to 'user' login}}
-          {{gh-avatar url=avatar_url size=60}}
-          {{login}}
-        {{/link-to}}
+        {{gh-avatar url=avatar_url size=60}}
+        <span class="user-login">{{login}}</span>
         {{outlet repository-topbar}}
       </h1>
     </div>
@@ -59,7 +78,7 @@
   </script>
 
   <script type="text/x-handlebars" id="user/index">
-    <ul class="repositories">
+    <ul class="striped repositories">
       {{#each controller}}
         {{#link-to "repository" name tagName="li" class="repository"}}
           <h2>{{name}}</h2>
@@ -67,6 +86,8 @@
             {{open_issues_count}} {{pluralize "Issue" open_issues_count}}
           </div>
         {{/link-to}}
+      {{else}}
+        <li class="nothing">This user has no repositories.</li>
       {{/each}}
     </ul>
   </script>
@@ -85,11 +106,11 @@
   </script>
 
   <script type="text/x-handlebars" id="repository/topbar">
-    <div class="seperator">/</div> {{link-to name 'repository' name}}
+    <div class="seperator">/</div> <span class="repo-name">{{name}}</span>
   </script>
 
   <script type="text/x-handlebars" id="repository/index">
-    <ul class="issues">
+    <ul class="striped issues">
       {{#each controller}}
         {{#link-to "issue" number tagName="li" class="issue"}}
           <h2>#{{number}}</h2>
@@ -106,7 +127,7 @@
           </div>
         {{/link-to}}
       {{else}}
-        <li class="no-issues">This repository does not have any issues.</li>
+        <li class="nothing">This repository does not have any issues.</li>
       {{/each}}
       {{#if hasMore}}
         <li class="load-more">

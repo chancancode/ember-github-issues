@@ -17,22 +17,8 @@ App.Router.map(function(){
   });
 });
 
-App.IndexController = Ember.Controller.extend({
-  where: null,
-
-  actions: {
-    go: function(){
-      var path = this.get('where').split(/\/|#/);
-
-      if(path.length === 1){
-        this.transitionToRoute('user', path[0]);
-      }else if(path.length === 2){
-        this.transitionToRoute('repository', path[0], path[1]);
-      }else{
-        this.transitionToRoute('issue', path[0], path[1], path[2]);
-      }
-    }
-  }
+App.ApplicationController = Ember.Controller.extend({
+  isShowingJumpBar: false
 });
 
 App.GhAvatarComponent = Ember.Component.extend({
@@ -106,6 +92,81 @@ App.VisibilityCheckerComponent = Ember.Component.extend({
     if(this.get('element').getBoundingClientRect().top < window.innerHeight){
       this.sendAction();
     }
+  }
+});
+
+App.JumpBarComponent = Ember.Component.extend({
+  isShowing: false,
+  where: '',
+
+  actions: {
+    didPressEnter: function(){
+      this.sendAction('action', this.get('where'));
+      this.willDismiss();
+    },
+
+    didCancel: function(){
+      this.willDismiss();
+    }
+  },
+
+  isShowingDidChange: function(){
+    if(this.get('isShowing')){
+      Ember.run.scheduleOnce('afterRender', this, function(){
+        this.$('input').focus();
+      });
+    }
+  }.observes('isShowing'),
+
+  focusOut: function(){
+    this.willDismiss();
+  },
+
+  willDismiss: function(){
+    this.set('where', '');
+    this.sendAction('dismiss');
+  }
+});
+
+App.ApplicationRoute = Ember.Route.extend({
+  actions: {
+    go: function(where){
+      if(!where){
+        this.transitionTo('index');
+      }else{
+        var path = where.split(/\/|#/);
+
+        if(path.length === 1){
+          this.transitionTo('user', path[0]);
+        }else if(path.length === 2){
+          this.transitionTo('repository', path[0], path[1]);
+        }else{
+          this.transitionTo('issue', path[0], path[1], path[2]);
+        }
+
+        this.set('controller.isShowingJumpBar', false);
+      }
+    },
+
+    showJumpBar: function(){
+      this.set('controller.isShowingJumpBar', true);
+    },
+
+    dismissJumpBar: function(){
+      this.set('controller.isShowingJumpBar', false);
+    }
+  }
+});
+
+App.IndexRoute = Ember.Route.extend({
+  actions: {
+    dismissJumpBar: function(){
+      return false;
+    }
+  },
+
+  activate: function(){
+    this.send('showJumpBar');
   }
 });
 
